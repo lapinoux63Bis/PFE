@@ -1,5 +1,6 @@
-CODES UTILES POUR LE PFE (Perche de Fin d'Etude, ou encore eporjet de synthèse)
+CODES UTILES POUR LE PFE (Perche de Fin d'Etude, ou encore projet de synthèse)
 
 ESP1 = BOUTON
 ESP2 = LED ET LUMINOSITE
 ESP3 = MOTEUR
+ESPX_TLS = implémentation des esp32 précédents avec TLS 
