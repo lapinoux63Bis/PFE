@@ -17,7 +17,7 @@ uint8_t temprature_sens_read();
 
 // Paramètres de votre réseau WiFi
 const char* ssid = "TP-Link_AB3E";
-const char* password = "12831517"
+const char* password = "12831517";
 
 // Paramètres du serveur MQTT
 const char* mqtt_server = "192.168.230.78";
