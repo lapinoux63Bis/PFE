@@ -16,8 +16,8 @@ uint8_t temprature_sens_read();
 #endif
 
 // Paramètres de votre réseau WiFi
-const char* ssid = "Capucine";
-const char* password = "puyp4784";
+const char* ssid = "TP-Link_AB3E";
+const char* password = "12831517"
 
 // Paramètres du serveur MQTT
 const char* mqtt_server = "192.168.230.78";
@@ -26,6 +26,8 @@ const int mqtt_port = 1883; // Port MQTT par défaut
 const char* mqtt_topic = "BOUTON";
 const char* mqtt_topic_tcpu1 = "TCPU1";
 const char* mqtt_topic_fcpu1 = "FCPU1";
+const char* mqtt_username = "client";
+const char* mqtt_password = "mosquitto";
 
 // Broche du bouton-poussoir
 #define BUTTON_PIN 13 // GIOP21 pin connected to button
@@ -127,7 +129,7 @@ void reconnect() {
     String clientId = "ESP32Client1";
     clientId += String(random(0xffff), HEX);
 
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) {
       Serial.println("connecté");
     } else {
       Serial.print("échec, rc=");
