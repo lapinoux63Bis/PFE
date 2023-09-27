@@ -1,5 +1,5 @@
 #include <WiFiClientSecure.h>
-#include <TBPubSubClient.h>
+#include <PubSubClient.h>
 // POUR FREQUENCE ET TEMPERATURE
 #include <time.h>
 #include <sys/time.h>
@@ -16,8 +16,9 @@ uint8_t temprature_sens_read();
 
 
 // Paramètres de votre réseau WiFi
-const char* ssid = "Capucine";
-const char* password = "puyp4784";
+const char* ssid = "TP-Link_AB3E";
+const char* password = "12831517";
+
 
 // Paramètres du serveur MQTT
 IPAddress mqtt_server(192, 168, 230, 78);
@@ -145,6 +146,7 @@ void setup() {
   pinMode(in1Pin, OUTPUT); //config des pins
   pinMode(in2Pin, OUTPUT);
   pinMode(enaPin, OUTPUT);
+  client.subscribe(mqtt_topic); // S'abonner au sujet MQTT
 }
 
 void loop() {
@@ -219,6 +221,7 @@ void setupWiFi() {
 
 
 void callback(char* topic, byte* payload, unsigned int length) {
+  Serial.print("1");
   String message = "";
   for (int i = 0; i < length; i++) {
     message += (char)payload[i];
