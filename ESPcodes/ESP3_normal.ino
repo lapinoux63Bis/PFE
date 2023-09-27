@@ -16,8 +16,10 @@ uint8_t temprature_sens_read();
 
 
 // Paramètres de votre réseau WiFi
-const char* ssid = "Capucine";
-const char* password = "puyp4784";
+const char* ssid = "TP-Link_AB3E";
+const char* password = "12831517";
+const char* mqtt_username = "client";
+const char* mqtt_password = "mosquitto";
 
 // Paramètres du serveur MQTT
 const char* mqtt_server = "192.168.230.78";
@@ -161,7 +163,7 @@ void reconnect() {
     String clientId = "ESP32Client2";
     clientId += String(random(0xffff), HEX);
 
-    if (client.connect(clientId.c_str())) {
+    if (client.connect(clientId.c_str(), mqtt_username, mqtt_password)) {
       Serial.println("connecté");
       client.subscribe(mqtt_topic); // S'abonner au sujet MQTT
     } else {
