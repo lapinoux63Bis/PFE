@@ -4,3 +4,5 @@ ESP1 = BOUTON
 ESP2 = LED ET LUMINOSITE
 ESP3 = MOTEUR
 ESPX_TLS = implémentation des esp32 précédents avec TLS 
+
+cpu_stats mode normal
