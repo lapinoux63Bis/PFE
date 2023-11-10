@@ -13,7 +13,7 @@ from sklearn.metrics import confusion_matrix
 ## importation
 
 df_train = pd.read_csv(r"C:\Users\Administrator\Documents\EN_ENSEIGNE\PFE\RPI\cpu_stats2_true4.csv")
-df_test = pd.read_csv(r"C:\Users\Administrator\Documents\EN_ENSEIGNE\PFE\RPI\DATASETS\SSH_bruteforce_3\cpu_stats2.csv")
+
 df_train.Classe.value_counts()
 
 ## numerotation des classes
@@ -23,7 +23,8 @@ class_dict_train = {cls: i for i, cls in enumerate(classes_train)}
 
 # Assigner les valeurs numériques en fonction du dictionnaire
 df_train['Classe'] = df_train['Classe'].map(class_dict_train)
-##
+df_train.Classe.value_counts()
+
 scaler = MinMaxScaler(feature_range=(0, 3))
 data_train = scaler.fit_transform(df_train[["Temperature", "Frequency", "Cpu_usage", "Cpu_memory",'Classe']])
 
@@ -46,6 +47,7 @@ for i in range(n_steps, len(df_train)):
 
 X_train = np.array(X_train)
 y_train = to_categorical(y_train, num_classes = num_classes)  # Convertir en catégories pour le modèle
+
 ##
 # Modèle LSTM
 model = Sequential()
@@ -55,18 +57,18 @@ model.compile(optimizer='adam', loss='categorical_crossentropy', metrics=['accur
 
 # Entraînement du modèle
 model.fit(X_train, y_train, epochs=50, batch_size=32)
-##
-df_test = pd.read_csv(r"C:\Users\Administrator\Documents\EN_ENSEIGNE\PFE\RPI\DATASETS\MQTT_bruteforce2\cpu_stats.csv")
-##numerotation des classes
 
-# Créer un dictionnaire de correspondance entre les classes et les valeurs numériques
-classes_test = df_test['Classe'].unique()
-class_dict_test = {cls: i for i, cls in enumerate(classes_test)}
+
+##Importation test
+
+df_test =  pd.read_csv(r"C:\Users\Administrator\Documents\EN_ENSEIGNE\PFE\RPI\DATASETS\SSH_bruteforce_3\cpu_stats.csv")
+df_test.Classe.value_counts()
 
 # Assigner les valeurs numériques en fonction du dictionnaire
-df_test['Classe'] = df_test['Classe'].map(class_dict_test)
+df_test['Classe'] = df_test['Classe'].map(class_dict_train)
+df_test.Classe.value_counts()
 
-## mise en forme test
+##mise en forme test
 data_test = scaler.transform(df_test[["Temperature", "Frequency", "Cpu_usage", "Cpu_memory",'Classe']])
 # Préparation des données de test
 X_test = []
@@ -103,6 +105,17 @@ confusion = confusion_matrix(np.argmax(y_test, axis=1), predicted_classes)
 print("Matrice de confusion :")
 print(confusion)
 
+##
+
+# Affichage de la matrice de confusion avec seaborn
+class_names = ['0','1', '2','3']  # Noms des classes
+plt.figure(figsize=(8, 6))
+sns.heatmap(confusion, annot=True, fmt="d", cmap="Blues",
+            xticklabels=class_names, yticklabels=class_names)
+plt.xlabel('Valeurs Prédites')
+plt.ylabel('Vraies Valeurs')
+plt.title('Matrice de Confusion')
+plt.show()
 
 
 ##tracé des resultats
@@ -114,24 +127,14 @@ plt.figure(figsize=(10, 6))
 
 # Créer des couleurs pour chaque classe prédite
 colors = {0: 'blue', 1: 'red', 2: 'green', 3: 'cyan'}  # Modifier en fonction du nombre de classes
+class_names = {0: 'Normal', 1: 'DoS', 2: 'MQTT_bruteforce', 3: 'SSH_bruteforce'}
 
 # Tracer le graphique point par point en attribuant une couleur en fonction de la classe prédite
 for label, color in colors.items():
     subset = df_test[df_test['predicted_class'] == label]
-    plt.scatter(subset.index, subset['Cpu_usage'], label=f'Classe {label}', color=color)
+    plt.scatter(subset.index, subset['Cpu_usage'], label=class_names[label], color=color)
 
 plt.xlabel('Index')
 plt.ylabel('Cpu_usage')
 plt.legend()
 plt.show()
-
-
-## verif
-unique_values_y_test = np.unique(y_test)
-unique_values_predicted_classes = np.unique(predicted_classes)
-
-print("Valeurs uniques dans y_test :", unique_values_y_test)
-print("Valeurs uniques dans predicted_classes :", unique_values_predicted_classes)
-
-
-
