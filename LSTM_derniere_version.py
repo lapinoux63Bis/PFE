@@ -91,7 +91,7 @@ y_test = to_categorical(y_test, num_classes=num_classes) # Convertir en catégor
 # Prédiction sur les données de test
 y_pred = model.predict(X_test_padded)
 
-# Récupérer la classe prédite pour chaque exemple
+# Récupérer la classe prédite pour chaque exemple, plus haute probabilité donne la classe prédite
 predicted_classes = np.argmax(y_pred, axis=1)
 
 #true classes
