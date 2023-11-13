@@ -1,10 +1,7 @@
 Ce dépôt github regroupe les différents codes ainsi que certains datasets utilisés au cours de notre Projet de Fin d'Etude.
 
 Le dossier ESP contient les codes C++ ayant permis de configurer les ESP32 afin de les connecter et les intégrer au sein de notre IoT. 
-ESP1 = BOUTON 
-ESP2 = LED ET LUMINOSITE
-ESP3 = MOTEUR
-ESPX_TLS = implémentation des esp32 précédents avec une couche TLS 
+(ESP1 = BOUTON, ESP2 = LED ET LUMINOSITE, ESP3 = MOTEUR, ESPX_TLS = implémentation des esp32 précédents avec une couche TLS)
 
 Les dossiers DOS, MQTT, SSH, NORMAL contiennent les datasets réalisés lors d'une attaque DoS, MQTT, SSH et sans attaques respectivement.
 Le dossier Random Forest contient les codes utilisés pour traiter les différentes attaques avec l'algorithme éponyme.
